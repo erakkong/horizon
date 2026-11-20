@@ -731,4 +731,19 @@ mod tests {
         assert_eq!(e.view(false).2.chars().count(), 38);
         assert_eq!(e.view(true).1.chars().count(), 38);
     }
+
+    #[test]
+    fn wide_field_shows_full_width_text() {
+        let mut e = LineEdit::new(
+            "http://172.17.0.1:7897,socks5://172.17.0.1:7897,all_proxy://172.17.0.1:7897".into(),
+            256,
+            44,
+        );
+        let (before, _, _, _) = e.view(false);
+        assert_eq!(before.chars().count(), 44);
+
+        e.show(72);
+        let (before, _, _, _) = e.view(false);
+        assert_eq!(before.chars().count(), 72);
+    }
 }
