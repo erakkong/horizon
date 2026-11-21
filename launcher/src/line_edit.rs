@@ -114,6 +114,9 @@ impl LineEdit {
     /// How many characters the box shows.
     pub(super) fn show(&mut self, visible: usize) {
         self.visible = visible;
+        if self.scroll > 0 {
+            self.scroll = self.scroll.min(self.len().saturating_sub(self.visible));
+        }
         self.reveal();
     }
 
